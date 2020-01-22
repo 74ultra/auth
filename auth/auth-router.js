@@ -1,5 +1,5 @@
 const express = require('express');
-const Users = require('./users-model.js');
+const Users = require('../users/users-model.js');
 const bcrypt = require('bcryptjs')
 
 const router = express.Router();
@@ -18,6 +18,7 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res) => {
     const { username, password } = req.body;
+    console.log('req.body', req.body)
     Users.findByUserName(username)
         .then(user => {
             if (user && bcrypt.compareSync(password, user.password)){
@@ -28,7 +29,7 @@ router.post('/login', (req, res) => {
         })
         .catch(err => {
             console.log(err)
-            res.status(500).json({ message: `Error loggin in`})
+            res.status(500).json({ message: `Error logging in`})
         })
 
 })
